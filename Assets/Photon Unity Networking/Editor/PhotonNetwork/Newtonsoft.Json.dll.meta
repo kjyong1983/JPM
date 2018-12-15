@@ -1,10 +1,5 @@
 fileFormatVersion: 2
-guid: 0268f98d7c649564a818b0768fc68d4b
-labels:
-- ExitGames
-- PUN
-- Photon
-- Networking
+guid: 4c79ca56ca689ee4a98288d6ea6ec971
 PluginImporter:
   externalObjects: {}
   serializedVersion: 2
