@@ -37,4 +37,7 @@ MonoBehaviour:
   - RequestForPickupItems
   - RequestForPickupTimes
   - InstantiateBullet
+  - AddHp
+  - HitBullet
+  - HitPlayer
   DisableAutoOpenWizard: 1
