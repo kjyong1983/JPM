@@ -55,12 +55,12 @@ public class PlayerStat : Photon.MonoBehaviour {
         hp += deltaHp;
         if (hp <= 0)
         {
-            if (PhotonNetwork.isMasterClient)
+            //if (PhotonNetwork.isMasterClient)
+            if (photonView.isMine)
             {
                 Instantiate(DeathEffectPrefab, transform.position, Quaternion.identity);
+                ConnectionManager.instance.StartRespawnCoroutine();
                 PhotonNetwork.Destroy(gameObject);
-
-                StartCoroutine(WaitForRespawn());
             }
 
         }
@@ -82,9 +82,4 @@ public class PlayerStat : Photon.MonoBehaviour {
         moveSpeed += value;
     }
 
-    IEnumerator WaitForRespawn()
-    {
-        yield return new WaitForSeconds(3f);
-        Respawn();
-    }
 }

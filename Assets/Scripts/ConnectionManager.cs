@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using ExitGames.Client.Photon;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,6 +7,7 @@ using UnityEngine.UI;
 public class ConnectionManager : MonoBehaviour, IPunCallbacks {
     [SerializeField] Button joinRoomButton = null;
 
+    public static ConnectionManager instance;
 
     public void OnConnectedToMaster() {
     }
@@ -76,7 +78,7 @@ public class ConnectionManager : MonoBehaviour, IPunCallbacks {
     public void OnPhotonCreateRoomFailed(object[] codeAndMsg) {
     }
 
-    public void OnPhotonCustomRoomPropertiesChanged(Hashtable propertiesThatChanged) {
+    public void OnPhotonCustomRoomPropertiesChanged(ExitGames.Client.Photon.Hashtable propertiesThatChanged) {
     }
 
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
@@ -115,6 +117,11 @@ public class ConnectionManager : MonoBehaviour, IPunCallbacks {
     void Awake() {
         joinRoomButton.interactable = false;
 
+        if (instance == null)
+        {
+            instance = this;
+        }
+
         if (PhotonNetwork.connected == false) {
             if (PhotonNetwork.ConnectUsingSettings("1.0")) {
                 Debug.Log("PhotonNetwork Connected.");
@@ -127,4 +134,16 @@ public class ConnectionManager : MonoBehaviour, IPunCallbacks {
     public void JoinRoom() {
         PhotonNetwork.JoinOrCreateRoom("defaultRoomName", new RoomOptions { }, TypedLobby.Default);
     }
+
+    public void StartRespawnCoroutine()
+    {
+        StartCoroutine(WaitForRespawn());
+    }
+
+    IEnumerator WaitForRespawn()
+    {
+        yield return new WaitForSeconds(3f);
+        SpawnPlayer();
+    }
+
 }
